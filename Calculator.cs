@@ -2,7 +2,9 @@ using System;
 using System.Diagnostics;
 public static class PrimeCalculator {
 
+//кол-во потоков
     public const int ThreadCount = 4;
+//Проверяет является ли число простым
     public static bool IsPrime(int number) {
 
         if (number < 2) return false;
@@ -14,6 +16,7 @@ public static class PrimeCalculator {
         return true;
     }
 
+//Единый вывод результатов (по заданию)
     public static void ResultOfCalculations(string version, int count, TimeSpan timeOfProccessing) {
         Console.WriteLine(version);
         Console.WriteLine($"Найдено {count} простых чисенл");

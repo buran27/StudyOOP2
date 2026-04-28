@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
+using Study.Calculator;
 
 namespace Study.Vers3;
 
@@ -58,7 +59,7 @@ class CounterWithSemaphore
         for (int number = rangeStart; number <= rangeEnd; number++)
         {
             Console.WriteLine($"Поток {threadNumber}: обрабатывает число {number}");
-            if (IsPrime(number))
+            if (PrimeCalculator.IsPrime(number))
             {
                 _semaphore.Wait();
                 try
@@ -73,21 +74,7 @@ class CounterWithSemaphore
             }
         }
     }
-    private static bool IsPrime(int number)
-    {
-        if (number < 2)
-            return false;
-        if (number == 2)
-            return true;
-        if (number % 2 == 0)
-            return false;
-        for (int i = 3; i * i <= number; i += 2)
-        {
-            if (number % i == 0)
-                return false;
-        }
-        return true;
-    }
+
 
 }
 

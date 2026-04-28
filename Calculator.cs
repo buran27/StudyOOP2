@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+namespace Study.Calculator;
 public static class PrimeCalculator {
 
     public static bool IsPrime(int number) {

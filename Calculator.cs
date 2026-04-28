@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics;
 public static class PrimeCalculator {
 
-    public const int ThreadCount = 4;
     public static bool IsPrime(int number) {
 
         if (number < 2) return false;

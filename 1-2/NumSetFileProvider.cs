@@ -8,6 +8,7 @@ public class NumSetFileProvider
   private readonly int _minValue;
   private readonly int _maxValue;
 
+
   public NumSetFileProvider(
     string path,
     int setsCount,

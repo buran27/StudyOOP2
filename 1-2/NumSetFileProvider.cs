@@ -63,5 +63,21 @@ public class NumSetFileProvider
     Console.WriteLine($"File is created: {_filePath}");
   }
 
+  public List<int[]> LoadNumSet()
+  {
+    string[] lines = File.ReadAllLines(_filePath);
+
+    List<int[]> numberSets = new List<int[]>();
+
+    foreach(string line in lines)
+    {
+      int[] numbers = line
+        .Split(" ", StringSplitOptions.RemoveEmptyEntries)
+        .Select(int.Parse)
+        .ToArray();
+        numberSets.Add(numbers);
+    }
+    return numberSets;
+  }
 
 }

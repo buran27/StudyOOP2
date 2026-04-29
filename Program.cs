@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using Study.Calculator;
 using Study.Vers3;
 
 
@@ -23,6 +24,7 @@ class Program
   //       Console.WriteLine($"Общее количество простых чисел: {result.PrimeCount}");
   //       Console.WriteLine($"Время выполнения: {result.ElapsedMilliseconds} мс");
   // }
+
     static async Task Main()
     {
         string[] urls =

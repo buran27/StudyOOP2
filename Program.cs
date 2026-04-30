@@ -71,9 +71,7 @@ class Program
 
         NumberSetProcessor processor = new NumberSetProcessor(
             numberSets,
-            maxWorkingThreads,
-            journal, // это как раз твой класс допустим мьютекса
-            totalSumCounter // а это допустим лока или что там нужно
+            maxWorkingThreads
         );
 
         Stopwatch stopwatch = Stopwatch.StartNew();
@@ -85,15 +83,17 @@ class Program
         Console.WriteLine();
         Console.WriteLine("=== Результаты обработки наборов ===");
 
-        foreach (ProcessingResult result in journal.GetResults()) // тут идет какой то перебор, честно хуй знает, мне это ии написал
+        foreach (string record in processor.GetJournal())
         {
-            Console.WriteLine(result);
+            Console.WriteLine(record);
         }
 
         Console.WriteLine();
-        Console.WriteLine($"Общий итог по всем наборам: ");// тут мы всё выводим
+        Console.WriteLine($"Общий итог по всем наборам (Mutex): {processor.GetTotalSum()}");
         Console.WriteLine($"Время выполнения: {stopwatch.ElapsedMilliseconds} мс");
     }
+
+    //2.async
 
     // static async Task Main()
     // {
@@ -143,4 +143,57 @@ class Program
     //         Console.WriteLine($"Время до ошибки: {stopwatch.ElapsedMilliseconds} мс");
     //     }
     // }
+
+    //2.sync
+
+    // static void Main()
+    // {
+    //     string[] urls =
+    //     {
+    //         "https://jsonplaceholder.typicode.com/posts/1",
+    //         "https://jsonplaceholder.typicode.com/users/1",
+    //         "https://jsonplaceholder.typicode.com/todos/1",
+    //        // "https://jsonplaceholder.typicode.com/posts/999999" - раскоментировать для проверки работы с ошибкой
+    //     };
+
+    //     SyncJsonRequestService requestService = new SyncJsonRequestService();
+    //     Stopwatch stopwatch = Stopwatch.StartNew();
+
+    //     try
+    //     {
+
+    //         List<RequestResultsync> results = requestService.LoadAll(urls);
+
+    //         stopwatch.Stop();
+
+    //         Console.WriteLine("=== JSON-ответы серверов (Синхронно) ===");
+
+    //         foreach (RequestResultsync result in results)
+    //         {
+    //             Console.WriteLine();
+    //             Console.WriteLine($"Адрес: {result.Url}");
+    //             Console.WriteLine(result.Json);
+    //         }
+
+    //         Console.WriteLine();
+    //         Console.WriteLine($"Общее время выполнения: {stopwatch.ElapsedMilliseconds} мс");
+    //     }
+    //     catch (HttpRequestException ex)
+    //     {
+    //         stopwatch.Stop();
+
+    //         Console.WriteLine("\nОшибка при выполнении HTTP-запроса:");
+    //         Console.WriteLine(ex.Message);
+    //         Console.WriteLine($"Время до ошибки: {stopwatch.ElapsedMilliseconds} мс");
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         stopwatch.Stop();
+
+    //         Console.WriteLine("\nПроизошла непредвиденная ошибка:");
+    //         Console.WriteLine(ex.Message);
+    //         Console.WriteLine($"Время до ошибки: {stopwatch.ElapsedMilliseconds} мс");
+    //     }
+    // }
 }
+

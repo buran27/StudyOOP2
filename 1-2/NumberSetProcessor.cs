@@ -5,6 +5,12 @@ public class NumberSetProcessor
   private readonly List<int[]> _numSets;
   private readonly int _maxWorkingThreads;
 
+    private readonly List<string> _journal = new List<string>(); // Список для lock
+    private int _totalSum = 0; 
+
+    private readonly object _locker = new object(); 
+    private readonly Mutex _mutex = new Mutex();    
+
   public NumberSetProcessor(List<int[]> numSets, int maxThreads)
   {
     if(numSets == null)
@@ -15,8 +21,9 @@ public class NumberSetProcessor
     _numSets = numSets;
     _maxWorkingThreads = maxThreads;
 
-    // тут мы инициализируем твои классы 
   }
+    public List<string> GetJournal() => _journal;
+    public int GetTotalSum() => _totalSum;
 
     public void Process()
     {
@@ -56,12 +63,25 @@ public class NumberSetProcessor
         try
         {
             int threadId = Thread.CurrentThread.ManagedThreadId;
+            int sum = numbers.Sum();
 
             Console.WriteLine($"Поток {threadId} начал обработку набора {setNumber}");
 
-            int sum = numbers.Sum();
+            lock (_locker)
+            {
+                _journal.Add($"Набор {setNumber}: Сумма {sum} (Поток {threadId})");
+            }
 
-          //тут нужно делать добовление
+            _mutex.WaitOne();
+            try
+            {
+                _totalSum += sum;
+            }
+            finally
+            {
+                _mutex.ReleaseMutex(); 
+            }
+
 
             Console.WriteLine($"Поток {threadId} закончил обработку набора {setNumber}");
         }

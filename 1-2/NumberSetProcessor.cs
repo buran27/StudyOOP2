@@ -1,5 +1,5 @@
 
-
+namespace Study.NumProcessor;
 public class NumberSetProcessor
 {
   private readonly List<int[]> _numSets;
@@ -14,6 +14,8 @@ public class NumberSetProcessor
 
     _numSets = numSets;
     _maxWorkingThreads = maxThreads;
+
+    // тут мы инициализируем твои классы 
   }
 
     public void Process()

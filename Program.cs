@@ -5,6 +5,8 @@ using Study.Vers2;
 using Study.Vers3;      
 using Study.Common;
 using System.Diagnostics;
+using Study.Generate;
+using Study.NumProcessor;
 class Program
 {
     static void Main()
@@ -43,6 +45,54 @@ class Program
             result3.PrimeCount, 
             TimeSpan.FromMilliseconds(result3.ElapsedMilliseconds)
         );
+
+        //задание 1.2
+
+        const string filePath = "numbers.csv";
+
+        const int setsCount = 15;
+        const int numbersInSet = 100;
+        const int minValue = 1;
+        const int maxValue = 100;
+
+        const int maxWorkingThreads = 3;
+
+        NumSetFileProvider fileProvider = new NumSetFileProvider(
+            filePath,
+            setsCount,
+            numbersInSet,
+            minValue,
+            maxValue
+        );
+
+        fileProvider.EnsureFileExists();
+
+        List<int[]> numberSets = fileProvider.LoadNumSet();
+
+        NumberSetProcessor processor = new NumberSetProcessor(
+            numberSets,
+            maxWorkingThreads,
+            journal, // это как раз твой класс допустим мьютекса
+            totalSumCounter // а это допустим лока или что там нужно
+        );
+
+        Stopwatch stopwatch = Stopwatch.StartNew();
+
+        processor.Process();
+
+        stopwatch.Stop();
+
+        Console.WriteLine();
+        Console.WriteLine("=== Результаты обработки наборов ===");
+
+        foreach (ProcessingResult result in journal.GetResults()) // тут идет какой то перебор, честно хуй знает, мне это ии написал
+        {
+            Console.WriteLine(result);
+        }
+
+        Console.WriteLine();
+        Console.WriteLine($"Общий итог по всем наборам: ");// тут мы всё выводим
+        Console.WriteLine($"Время выполнения: {stopwatch.ElapsedMilliseconds} мс");
     }
 
     // static async Task Main()

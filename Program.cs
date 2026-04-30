@@ -4,6 +4,7 @@ using Study.Vers1;
 using Study.Vers2;      
 using Study.Vers3;      
 using Study.Common;
+using System.Diagnostics;
 class Program
 {
     static void Main()
@@ -43,4 +44,53 @@ class Program
             TimeSpan.FromMilliseconds(result3.ElapsedMilliseconds)
         );
     }
+
+    // static async Task Main()
+    // {
+    //     string[] urls =
+    //     {
+    //         "https://jsonplaceholder.typicode.com/posts/1",
+    //         "https://jsonplaceholder.typicode.com/users/1",
+    //         // "https://jsonplaceholder.typicode.com/posts/999999" //запрос с ошибкой
+    //     };
+
+    //     AsyncJsonRequestService requestService = new AsyncJsonRequestService();
+
+    //     Stopwatch stopwatch = Stopwatch.StartNew();
+
+    //     try
+    //     {
+    //         List<RequestResult> results = await requestService.LoadAllAsync(urls);
+
+    //         stopwatch.Stop();
+
+    //         Console.WriteLine("=== JSON-ответы серверов ===");
+
+    //         foreach (RequestResult result in results)
+    //         {
+    //             Console.WriteLine();
+    //             Console.WriteLine($"Адрес: {result.Url}");
+    //             Console.WriteLine(result.Json);
+    //         }
+
+    //         Console.WriteLine();
+    //         Console.WriteLine($"Общее время выполнения: {stopwatch.ElapsedMilliseconds} мс");
+    //     }
+    //     catch (HttpRequestException ex)
+    //     {
+    //         stopwatch.Stop();
+
+    //         Console.WriteLine("Ошибка при выполнении HTTP-запроса:");
+    //         Console.WriteLine(ex.Message);
+    //         Console.WriteLine($"Время до ошибки: {stopwatch.ElapsedMilliseconds} мс");
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         stopwatch.Stop();
+
+    //         Console.WriteLine("Произошла ошибка:");
+    //         Console.WriteLine(ex.Message);
+    //         Console.WriteLine($"Время до ошибки: {stopwatch.ElapsedMilliseconds} мс");
+    //     }
+    // }
 }
